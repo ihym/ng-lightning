@@ -12,7 +12,6 @@
   "main": "./ng-lightning.js",
   "typings": "./ng-lightning.d.ts",
   "scripts": {
-    "typings": "gulp typings:clean && typings install",
     "test": "gulp test",
     "tdd": "gulp tdd",
     "lint": "gulp lint:ts --failOnError=true",
@@ -53,6 +52,10 @@
     "@angular/platform-browser-dynamic": "^2.0.0",
     "@angular/router": "^3.0.0",
     "@salesforce-ux/design-system": "^2.0.3",
+    "@types/core-js": "^0.9.34",
+    "@types/jasmine": "^2.2.34",
+    "@types/node": "^6.0.40",
+    "@types/tether": "^1.1.27",
     "app-root-path": "^2.0.1",
     "browser-sync": "^2.16.0",
     "browser-sync-webpack-plugin": "^1.1.3",
