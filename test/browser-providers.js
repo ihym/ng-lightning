@@ -13,6 +13,12 @@ module.exports = {
     platform: 'OS X 10.11',
     version: '9'
   },
+  'SL_SAFARI10': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.12',
+    version: '10.0'
+  },
   'SL_IE_11': {
     base: 'SauceLabs',
     browserName: 'internet explorer',
@@ -30,5 +36,11 @@ module.exports = {
     browserName: 'android',
     platform: 'Linux',
     version: '5.1'
+  },
+  'SL_IOS10': {
+    base: 'SauceLabs',
+    browserName: 'iphone',
+    platform: 'OS X 10.10',
+    version: '10.0'
   },
 };
