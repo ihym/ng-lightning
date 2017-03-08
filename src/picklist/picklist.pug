@@ -2,7 +2,7 @@
   button.slds-button.slds-button--neutral.slds-picklist__label(type="button", nglDropdownTrigger, [disabled]="disabled")
     ng-content
     svg.slds-icon(nglIcon="down")
-  .slds-dropdown.slds-dropdown--left([ngClass]="{ 'slds-p-top--none': hasFilter }")
+  .slds-dropdown([class.slds-p-top--none]="hasFilter", [ngClass]="dropdownClass")
     input.slds-input(*ngIf="hasFilter", #filterInput, type="text", [attr.placeholder]="filterPlaceholder", [ngModel]="filter", (ngModelChange)="filterChange($event)",
                     (keydown.enter)="onFilterPick()", (keydown.arrowdown)="setFilterActive(1, $event)", (keydown.arrowup)="setFilterActive(-1, $event)",
                     (focus)="onFilterFocus()", (blur)="onFilterBlur()")

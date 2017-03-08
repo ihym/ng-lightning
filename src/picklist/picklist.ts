@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef} from '@angular/core';
+import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef, Renderer} from '@angular/core';
 import 'rxjs/add/operator/filter';
 import {NglPicklistItemTemplate} from './item';
 import {NglPick} from '../pick/pick';
@@ -41,6 +41,7 @@ export class NglPicklist {
   }
 
   @Input() dropdownListClass: any;
+  @Input() dropdownClass: any;
 
   @Input('filter') filterType: string | Function;
   @Input() filterPlaceholder: string = '';
@@ -73,7 +74,7 @@ export class NglPicklist {
   private filterActiveIndex: number = 0;
   private hasFilterFocus: boolean = false;
 
-  constructor(private pick: NglPick) {}
+  constructor(private pick: NglPick, private renderer: Renderer) {}
 
   ngAfterContentInit() {
     this._changeSubscription = this.pick.nglPickChange.filter(() => !this.pick.isMultiple)
@@ -136,7 +137,7 @@ export class NglPicklist {
   }
 
   focusFilter() {
-    this.filterInput.nativeElement.focus();
+    this.renderer.invokeElementMethod(this.filterInput.nativeElement, 'focus', []);
   }
 
   onFilterFocus() {

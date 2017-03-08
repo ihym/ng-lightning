@@ -8,6 +8,8 @@
   * `fluid?: boolean = false`: Whether width of label and dropdown inherit width of its content.
   * `filter?: string | function | ''`: The method used to filter the displayed items.
   * `filterPlaceholder?: string`: The placeholder to display for the filter input field.
+  * `dropdownClass?: string | Array | Object`: Style class(es) for dropdown element. Use as `ngClass`.
+  * `dropdownListClass?: string | Array | Object`: Style class(es) for dropdown-list element. Use as `ngClass`.
 
 ### Output
 
