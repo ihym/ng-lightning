@@ -15,7 +15,11 @@ function getDropdownTrigger(element: HTMLElement): HTMLButtonElement {
 }
 
 export function getOptionElements(element: HTMLElement): HTMLElement[] {
-  return selectElements(element, 'li');
+  return selectElements(element, 'li.slds-dropdown__item');
+}
+
+export function getCategoryElements(element: HTMLElement): HTMLElement[] {
+  return selectElements(element, 'h3');
 }
 
 function expectOptions(element: HTMLElement, expected: any[]) {
@@ -24,6 +28,12 @@ function expectOptions(element: HTMLElement, expected: any[]) {
   expect(options.map(e => e.textContent.trim()).map((text, i) => {
     return options[i].classList.contains('slds-is-selected') ? `+${text}` : text;
   })).toEqual(expected);
+}
+
+function expectCategories(element: HTMLElement, expected: any[]) {
+  const categories = getCategoryElements(element);
+
+  expect(categories.map(e => e.textContent.trim())).toEqual(expected);
 }
 
 describe('`NglPicklist`', () => {
@@ -110,7 +120,6 @@ describe('`NglPicklist`', () => {
     `);
     fixture.componentInstance.disabled = true;
     fixture.detectChanges();
-
     const triggerEl = getDropdownTrigger(fixture.nativeElement);
     expect(triggerEl.disabled).toBe(true);
 
@@ -134,6 +143,16 @@ describe('`NglPicklist`', () => {
     fixture.detectChanges();
     expect(picklistEl).not.toHaveCssClass('slds-picklist--fluid');
   });
+
+  it('should render grouped options correctly', () => {
+    const fixture = createTestComponent(`
+      <ngl-picklist [data]="items" [(nglPick)]="picks" [(open)]="open" category="category">
+        <template nglPicklistItem let-item>{{item.value}}</template>
+      </ngl-picklist>`);
+
+    expectOptions(fixture.nativeElement, [ 'Item 1', 'Item 2', 'Item 3' ]);
+    expectCategories(fixture.nativeElement, [ 'Category 1', 'Category 2' ]);
+  });
 });
 
 
@@ -153,8 +172,8 @@ export class TestComponent {
   picks: any = [];
 
   items = [
-    { value: 'Item 1', icon: 'kanban' },
-    { value: 'Item 2', icon: 'side_list' },
-    { value: 'Item 3', icon: 'table' },
+    { value: 'Item 1', icon: 'kanban', category: 'Category 1' },
+    { value: 'Item 2', icon: 'side_list', category: 'Category 1' },
+    { value: 'Item 3', icon: 'table', category: 'Category 2' },
   ];
 }

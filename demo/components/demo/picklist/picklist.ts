@@ -7,12 +7,20 @@ import {Component} from '@angular/core';
 export class DemoPicklist {
   open: boolean = false;
   multiple: boolean = true;
+  category: string = 'category';
   pick: any = [];
 
   items = [
-    { value: 'Item 1', icon: 'kanban' },
-    { value: 'Item 2', icon: 'side_list' },
-    { value: 'Item 3', icon: 'table' },
+    { value: 'Item 1', category: 'Category 1' },
+    { value: 'Item 2', category: 'Category 1' },
+    { value: 'Item 3', category: 'Category 1' },
+    { value: 'Item 4', category: 'Category 2' },
+    { value: 'Item 5', category: 'Category 2' },
+    { value: 'Item 6', category: 'Category 2' },
+    { value: 'Item 7', category: 'Category 2' },
+    { value: 'Item 8', category: 'Category 3' },
+    { value: 'Item 9', category: 'Category 3' },
+    { value: 'Item 10', category: 'Category 3' },
   ];
 
   get pickLabel() {

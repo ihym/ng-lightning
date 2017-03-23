@@ -17,6 +17,9 @@ import {toBoolean} from '../util/util';
 export class NglPicklist {
 
   filteredData: any[];
+  groupedData: any[];
+
+  @Input() category: string;
 
   @Input() set data(data: any[]) {
     this._data = data;
@@ -90,6 +93,7 @@ export class NglPicklist {
 
   filterData() {
     this.filteredData = this._filterData();
+    this.groupedData = this.groupBy(this.filteredData, this.category);
     this.setFilterActive(); // Keep active index in bounds
   }
 
@@ -108,13 +112,13 @@ export class NglPicklist {
     }
   }
 
-  isOptionActive(index: number) {
-    return this.hasFilter && this.filterActiveIndex === index;
+  isOptionActive(optionIndex, groupIndex) {
+    return this.hasFilter && this.filterActiveIndex === this.getIndex(optionIndex, groupIndex);
   }
 
-  onOptionHover(index: number) {
+  onOptionHover(optionIndex, groupIndex) {
     if (!this.hasFilterFocus) return;
-    this.filterActiveIndex = index;
+    this.filterActiveIndex = this.getIndex(optionIndex, groupIndex);
   }
 
   filterChange(filter: string) {
@@ -149,4 +153,35 @@ export class NglPicklist {
     this.filterActiveIndex = -1;
     this.hasFilterFocus = false;
   }
+
+  private getIndex(optionIndex, groupIndex) {
+    return optionIndex + (groupIndex > 0 ? this.groupedData[groupIndex - 1].options.length : 0);
+  }
+
+  private groupBy(data: any[], category: string) {
+    if (!category) {
+      return [
+        {
+          category: '',
+          options: data,
+        },
+      ];
+    }
+
+    const categories = {};
+    for (let i = 0; i < data.length; i++) {
+      const categoryName = data[i][category] || '';
+      if (!categories[categoryName]) {
+        categories[categoryName] = [];
+      }
+      categories[categoryName].push(data[i]);
+    }
+
+    const groupedData = [];
+    for (let categoryName in categories) {
+      groupedData.push({category: categoryName, options: categories[categoryName]});
+    }
+    return groupedData;
+  }
+
 }

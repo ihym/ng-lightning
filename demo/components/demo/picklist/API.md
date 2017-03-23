@@ -10,6 +10,7 @@
   * `filterPlaceholder?: string`: The placeholder to display for the filter input field.
   * `dropdownClass?: string | Array | Object`: Style class(es) for dropdown element. Use as `ngClass`.
   * `dropdownListClass?: string | Array | Object`: Style class(es) for dropdown-list element. Use as `ngClass`.
+  * `category?: string`: The name of the property used to classify options into categories.
 
 ### Output
 

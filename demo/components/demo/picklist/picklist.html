@@ -1,4 +1,4 @@
-<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open" [nglPickMultiple]="multiple" filter="value">
+<ngl-picklist [category]="category" [data]="items" [(nglPick)]="pick" [(open)]="open" [nglPickMultiple]="multiple" filter="value" dropdownClass="slds-dropdown--left" dropdownListClass="slds-dropdown--length-with-icon-5">
   <span class="slds-truncate">{{ pickLabel }}</span>
   <template nglPicklistItem let-item>{{item.value}}</template>
 </ngl-picklist>
