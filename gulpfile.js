@@ -1,152 +1,100 @@
-var gulp = require('gulp');
-var path = require('path');
-var del = require('del');
-var ts = require('gulp-typescript');
-var tsProject = ts.createProject('test/tsconfig.json');
-var lazypipe = require('lazypipe');
-var pug = require('pug');
-var inlineTemplates = require('gulp-inline-ng2-template');
-var cache = require('gulp-cached');
-var exec = require('child_process').exec;
-var isWin = /^win/.test(process.platform);
-var executable = isWin ? 'node_modules\\.bin\\ngc.cmd' : './node_modules/.bin/ngc';
-var webpack = require('webpack');
-var argv = require('yargs')
-            .boolean('failOnError').default('failOnError', false) // tslint
-            .argv;
+const gulp = require('gulp');
+const pug = require('gulp-pug');
+const data = require('gulp-data');
+const changed = require('gulp-changed');
+const del = require('del');
 
-var PATHS = {
-  src: ['src/**/*.ts','!src/**/*.spec.ts'],
-  templates: ['src/**/*.pug'],
-  spec: ['src/**/*.ts', 'test/{util,mock}/*.ts'],
-  temp: 'temp/',
-  tsInline: 'temp/inline/',
-  dist: 'demo/node_modules/ng-lightning',
-};
+const pugSrc = [
+  'projects/ng-lightning/src/lib',
+  'src/app',
+].map(path => `${path}/**/[^_]*.pug`);
 
-var inlineTemplatesTask = lazypipe()
-  .pipe(inlineTemplates, {
-    base: '/src',
-    useRelativePaths: true,
-    templateProcessor: function(filepath, ext, file, cb) {
-      const rendered = pug.render(file, {
-        doctype: 'html',
-        filename: filepath,
-      });
-      cb(null, rendered);
-    },
-    templateExtension: '.pug',
-  });
-
-gulp.task('clean', function() {
-  return del([PATHS.dist, PATHS.temp]);
+gulp.task('pug:clean', function libCleanHtml () {
+  return del(pugSrc.map(path => path.replace('.pug', '.html')));
 });
 
-gulp.task('lint:ts', function lint_ts_impl() {
-  var tslint = require('gulp-tslint');
+gulp.task('pug:watch', function libWatchdHtml() {
+  const watchSrc = pugSrc.map(path => path.replace('[^_]', ''));
+  gulp.watch(watchSrc, gulp.series('pug:compile'));
+});
 
-  return gulp.src( PATHS.spec )
-    .pipe(cache('lint:ts'))
-    .pipe(tslint({
-      formatter: 'prose',
+gulp.task('pug:compile', function libBuildHtml() {
+
+  const Prism = require('prismjs');
+  require('prismjs/components/')(['typescript']);
+
+  const path = require('path');
+  const fs = require('fs');
+  const _pug = require('pug');
+  const glob = require('glob');
+  const md = require('markdown-it')();
+
+  function safe(string) {
+    const replaceChars = { '{': `{{ '{' }}`, '}': `{{ '}' }}` };
+    return string.replace(/{|}/g, function (match) { return replaceChars[match]; });
+  }
+
+  function highlightTS(src) {
+    return safe(Prism.highlight(`${src}`, Prism.languages.typescript));
+  }
+
+  function highlightExample(filepath) {
+    // Typescript
+    const ts = highlightTS(fs.readFileSync(`${filepath}.ts`, 'UTF-8'));
+
+    // HTML
+    const pugSrc = _pug.renderFile(`${filepath}.pug`, { pretty: true });
+    const html = Prism.highlight(`${pugSrc}`.trim(), Prism.languages.markup);
+
+    return { ts: ts, html };
+  }
+
+  return gulp.src(pugSrc, { base: './' })
+    .pipe(changed('./', { extension: '.html' }))
+    .pipe(data(function(file) {
+      // Intro
+      if (file.path.endsWith('intro.pug')) {
+        const directory = path.dirname(file.path);
+
+        const docs = {};
+        [
+          { file: 'install', lang: 'clike' },
+          { file: 'usage', lang: 'typescript' },
+          { file: 'config', lang: 'typescript' },
+          { file: 'config-runtime', lang: 'typescript' },
+        ].forEach(({file, lang}) => {
+          const src = fs.readFileSync(`${directory}/${file}.md`, 'UTF-8');
+          const md = src;
+          docs[file] = lang === 'typescript' ? highlightTS(md) : Prism.highlight(`${md}`, Prism.languages[lang]);
+        });
+        return { ...docs };
+      }
+
+      // Demo component
+      const examplesDirectory = path.dirname(file.path) + '/examples';
+      if (fs.existsSync(examplesDirectory)) {
+        const dir = path.basename(path.dirname(file.path));
+
+        // Docs
+        const docsDir = path.dirname(file.path) + '/docs';
+        const readme = md.render(fs.readFileSync(`${docsDir}/README.md`, 'UTF-8'));
+        const api = md.render(fs.readFileSync(`${docsDir}/API.md`, 'UTF-8'));
+
+        const examples = glob.sync('**.pug', { cwd: examplesDirectory }).map((file) => {
+          const id = file.replace('.pug', '');
+          return { id, ...highlightExample(examplesDirectory + '/' + id) };
+        });
+
+        return { dir, examples, readme: safe(readme), api: safe(api) };
+      }
     }))
-    .pipe(tslint.report({
-      emitError: argv.failOnError,
-      summarizeFailureOutput: true,
-    }));
+    .pipe(pug({
+      doctype: 'html',
+      self: true,
+      pretty: true,
+      locals: {},
+    }).on('error', function (err) { console.log(err); }))
+    .pipe(gulp.dest('./'))
 });
 
-gulp.task('ngc:templates', function() {
-  return gulp.src(PATHS.src, {base: 'src'})
-    .pipe(inlineTemplatesTask())
-    .pipe(gulp.dest(PATHS.tsInline));
-});
-
-gulp.task('ngc', gulp.series('lint:ts', 'ngc:templates', function __ngc(cb) {
-  exec(`${executable} -p ./tsconfig.json`, (e) => {
-    if (e) console.log(e);
-    del('./temp/waste');
-    cb();
-  }).stdout.on('data', function(data) { console.log(data); });
-}));
-
-gulp.task('bundle', function __bundle(done) {
-  webpack({
-    devtool: 'source-map',
-    resolve: { extensions: ['.js'] },
-    entry: path.resolve(__dirname, PATHS.dist, 'ng-lightning.js'),
-    output: {
-      filename: PATHS.dist + '/bundles/ng-lightning.umd.js',
-      library: 'ng-lightning',
-      libraryTarget: 'umd'
-    },
-    externals: [/^\@angular\//, /^rxjs\//, 'tether'], // require but don't bundle
-  }, function(err, stats) {
-    if (err) throw new Error('bundle [webpack]', err);
-    done();
-  });
-});
-
-gulp.task('build', gulp.series('clean', 'ngc', 'bundle'));
-
-gulp.task('build:watch', function() {
-  gulp.watch([ PATHS.src, PATHS.templates ], gulp.series('ngc', 'bundle'));
-});
-
-gulp.task('demo:clean', function() {
-  return del(['demo/dist', 'temp/demo']);
-});
-
-gulp.task('demo:ngc', gulp.series('demo:clean', function __ngc(cb) {
-  exec(`${executable} -p ./demo/tsconfig-aot.json`, (e) => {
-    if (e) console.log(e);
-    cb();
-  }).stdout.on('data', function(data) { console.log(data); });
-}));
-
-function startKarmaServer(isTddMode, done) {
-  var config = {configFile: __dirname + '/karma.conf.js', singleRun: !isTddMode, autoWatch: isTddMode};
-  if (argv.logLevel) config.logLevel = argv.logLevel;
-
-  var karmaServer = require('karma').Server;
-  var server = new karmaServer(config, done);
-  server.start();
-
-  return server;
-}
-
-gulp.task('test:clean', function() {
-  return del(PATHS.temp);
-});
-
-gulp.task('test:build', function() {
-  var tsResult = gulp.src(PATHS.spec, {base: './'})
-    .pipe(inlineTemplatesTask())
-    .pipe(tsProject());
-
-  return tsResult.js
-    .pipe(cache('test:build'))
-    .pipe(gulp.dest(PATHS.temp));
-});
-
-gulp.task('test:clean-build', gulp.series('test:clean', 'test:build'));
-
-gulp.task('test', gulp.series('test:clean-build', function test_impl(done) {
-  startKarmaServer(false, done);
-}));
-
-gulp.task('tdd', gulp.series('test:clean-build', function tdd_impl(done) {
-  startKarmaServer(true, function(err) {
-    done(err);
-    process.exit(1);
-  }).on('browser_register', function(browser) {
-    gulp.watch([PATHS.spec, PATHS.templates], gulp.series('test:build'));
-  });
-}));
-
-gulp.task('prepublish', gulp.series('build', function prepublish_impl() {
-  return gulp.src(['package.json', '*.md', 'LICENSE'])
-    .pipe(gulp.dest(PATHS.dist));
-}));
-
-gulp.task('default', gulp.series('build'));
+gulp.task('pug', gulp.series('pug:clean', 'pug:compile'));

@@ -1,0 +1,14 @@
+.slds-container_large.slds-container_center
+  .slds-p-around_large
+
+    .slds-grid.slds-wrap.slds-grow
+
+      aside.slds-grow.slds-size--1-of-1.slds-medium-size--4-of-12.slds-large-size--3-of-12.slds-col-rule--right.slds-order--2.slds-small-order--2.slds-medium-order--1.slds-large-order--1
+
+        ul.slds-navigation-list--vertical.slds-has-block-links--space()
+          li.slds-list__item(*ngFor="let link of links", routerLinkActive="slds-is-active")
+            a.slds-navigation-list--vertical__action.slds-text-link--reset.slds-truncate([routerLink]="'/components/' + link.path")
+              | {{ getLabel(link) }}
+
+      .slds-grow.slds-size--1-of-1.slds-medium-size--8-of-12.slds-large-size--9-of-12.slds-col-rule--right.slds-order--1.slds-small-order--1.slds-medium-order--2.slds-large-order--2.slds-p-left--large.slds-p-right--large.slds-p-bottom--large
+        router-outlet

@@ -1,0 +1,25 @@
+button(type="button", nglButton="neutral", (click)="hideName = !hideName", class="slds-m-bottom--large") Toggle "Name", column
+button(type="button", nglButton="neutral", (click)="loading = !loading", class="slds-m-bottom--large") Toggle Loading
+button(type="button", nglButton="neutral", (click)="toggleData()", class="slds-m-bottom--large") Clear/Set data
+
+table.slds-max-medium-table--stacked-horizontal(ngl-datatable, [data]="data", trackByKey="rank", [loading]="loading", [(sort)]="sort", (sortChange)="onSort($event)",
+  (onRowClick)="onRowClick($event)")
+  ngl-datatable-column(heading="Rank", key="rank", sortable)
+  ngl-datatable-column(heading="Name", key="name", *ngIf="!hideName", cellClass="slds-truncate", sortable)
+  ngl-datatable-column(heading="Surname", key="surname", cellClass="slds-truncate", sortable)
+    ng-template(nglDatatableCell, let-row="row")
+      b {{row.surname}}
+
+  ngl-datatable-column(heading="Points", key="points")
+    ng-template(nglDatatableHeading)
+      strong Points
+    ng-template(nglDatatableCell, let-value)
+      ngl-badge {{value | number}}
+
+  // Loading overlay
+  ng-template(nglLoadingOverlay)
+    .slds-box.slds-box--small.slds-theme--shade.slds-text-align--center Loading...
+
+  // No rows overlay
+  ng-template(nglNoRowsOverlay) No data available in table!
+

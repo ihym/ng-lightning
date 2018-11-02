@@ -1,0 +1,7 @@
+ngl-tabset([(selected)]="selectedTab")
+
+  ng-template(ngl-tab="ngl-tab", label="Markup")
+    ng-container(*ngTemplateOutlet="markup")
+
+  ng-template(ngl-tab="ngl-tab", label="Typescript")
+    ng-container(*ngTemplateOutlet="ts")

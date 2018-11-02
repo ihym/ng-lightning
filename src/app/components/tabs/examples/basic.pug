@@ -1,0 +1,28 @@
+ngl-tabset([(selected)]="selectedTab", [variant]="variant")
+  ng-template(ngl-tab, label="Overview")
+    | You have {{details.length}} details.
+  |
+  ngl-tab(*ngFor="let detail of details", (activate)="tabChange(detail, 'active')", (deactivate)="tabChange(detail, 'inactive')")
+    ng-template(ngl-tab-label)
+      | Detail
+      i {{ detail }}
+    |
+    ng-template(ngl-tab-content)
+      p
+        | Some detail text for
+        b {{detail}}
+        | .
+      |
+      button(type="button", nglButton="destructive", (click)="removeDetail(detail)") Remove
+  |
+  ng-template(#heading) Summary
+  |
+  ng-template#sum(ngl-tab, #summarytab="nglTab", [label]="heading")
+    | Next last ID is {{id}}.
+
+.slds-m-top--large
+  button(type="button", nglButton="brand", (click)="addDetail()") Add Detail
+  |
+  button(type="button", nglButton="neutral", (click)="change()") Toggle scope
+  |
+  button(type="button", nglButton="neutral", (click)="selectedTab = summaryTab", [disabled]="isDisabled()") Show Summary

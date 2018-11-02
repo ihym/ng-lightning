@@ -1,25 +1,29 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es2015", "dom"],
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
     "module": "es2015",
     "moduleResolution": "node",
-    "declaration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "baseUrl": ".",
-    "stripInternal": true,
-    "outDir": "./demo/node_modules/ng-lightning",
-    "rootDir": "./temp/inline",
-    "sourceMap": true,
-    "inlineSources": true,
-    "skipLibCheck": true
-  },
-  "files": [
-    "temp/inline/ng-lightning.ts"
-  ],
-  "angularCompilerOptions": {
-    "preserveWhitespaces": false,
-    "strictMetadataEmit": true,
-    "genDir": "./temp/waste"
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "ng-lightning": [
+        "dist/ng-lightning"
+      ],
+      "ng-lightning/*": [
+        "dist/ng-lightning/*"
+      ]
+    }
   }
 }

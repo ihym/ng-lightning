@@ -1,0 +1,45 @@
+ng-template(#tip)
+  .slds-text-title--caps
+    strong {{ placement }}
+    |  placement. Initially open!
+  |   Dolor sit amet,
+  i consectetur adipisicing
+  |  elit. Cum, quaerat?
+ng-template(#tip2)
+  | Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi.
+div
+  | Quisque scelerisque lectus vel sodales semper.
+  | Sed
+  a([nglPopover]='tip', [nglPopoverPlacement]='placement', [nglOpen]='open', (mouseenter)='open = true', (mouseleave)='open = false') hover
+  |   vehicula sapien,
+  |   vitae tristique
+  a([nglPopover]='tip2', nglPopoverBehavior, nglPopoverHeader='Header Title', nglPopoverFooter='Footer Item') behavior
+  |  nisl viverra vitae. Aliquam erat volutpat. Ut accumsan metus vel hendrerit sagittis.
+.slds-m-top--x-large
+  button(type='button', nglButton='neutral', [nglPopover]='tip2', nglPopoverTheme='success', [nglOpen]='openClick1', (click)='openClick1 = !openClick1') Click me
+  |
+  button(type='button', nglButton='neutral', [nglPopover]='tip2', nglPopoverTheme='warning', [nglOpen]='openClick2', (click)='openClick2 = !openClick2') ...and me!
+.slds-m-top--x-large
+  span(nglPopover='...which always keep showing!', nglOpen='true', nglPopoverPlacement='right', ngltooltip) You can also make tooltips
+.slds-button-group.slds-m-top--xx-large(role='group')
+  button(type='button', (click)="change('top')", nglButton='neutral') Top
+  |
+  button(type='button', (click)="change('left')", nglButton='neutral') Left
+  |
+  button(type='button', (click)="change('right')", nglButton='neutral') Right
+  |
+  button(type='button', (click)="change('bottom')", nglButton='neutral') Bottom
+  |
+  button(type='button', (click)='open = !open', nglButton='neutral') Toggle
+.slds-text-title--caps.slds-m-bottom--small.slds-m-top--x-large Open and close with delay
+a(nglPopover='I open and close with 1 second delay...', nglPopoverBehavior, ngltooltip, nglPopoverDelay='1000', #x='nglPopover') Hover me!
+.slds-m-top--medium
+  button(type='button', nglButton='neutral', (click)='x.open(0)') Open immediately
+  |
+  button(type='button', nglButton='neutral', (click)='x.close(0)') Close immediately
+.slds-text-title--caps.slds-m-bottom--small.slds-m-top--x-large Interaction
+ng-template(#interactive)
+  | Try clicking
+  |
+  a(href='https://github.com/ng-lightning/ng-lightning', target='_blank') this link
+a([nglPopover]='interactive', nglInteractive='true', nglPopoverDelay='500', nglPopoverBehavior, ngltooltip) Hover...

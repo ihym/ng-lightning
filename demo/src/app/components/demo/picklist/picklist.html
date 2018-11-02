@@ -1,6 +1,0 @@
-<ngl-picklist [data]="items" [(nglPick)]="pick" [(open)]="open" [nglPickMultiple]="multiple" filter="value">
-  <span class="slds-truncate">{{ pickLabel }}</span>
-  <ng-template nglPicklistItem let-item>{{item.value}}</ng-template>
-</ngl-picklist>
-
-<button type="button" nglButton="neutral" (click)="toggleMultiple()">Toggle Multiple</button>

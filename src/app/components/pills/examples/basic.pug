@@ -1,0 +1,19 @@
+.slds-text-title--caps.slds-m-bottom--small Pill examples
+ngl-pill
+  a(href="javascript:void(0)") Default
+ngl-pill
+  ngl-icon(iconName="standard:feedback", nglPillImage)
+  |
+  a(href="javascript:void(0)") With icon
+ngl-pill
+  ngl-avatar(type="circle", src="assets/images/avatar2.jpg", nglPillImage)
+  |
+  a(href="javascript:void(0)") With portrait
+ngl-pill Unlinked
+.slds-text-title--caps.slds-m-bottom--small.slds-m-top--x-large Removable pills
+button(type="button", nglButton="brand", (click)="add()") Add
+.slds-clearfix.slds-p-vertical--xx-small
+ngl-pill((nglPillRemove)="remove(pill)", *ngFor="let pill of pills")
+  ngl-icon(iconName="standard:account", nglPillImage)
+  |
+  a(href="javascript:void(0)") {{pill}}

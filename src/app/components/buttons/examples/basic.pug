@@ -1,0 +1,24 @@
+button(type="button", nglButton="success") Success
+button(type="button", nglButton="neutral") Neutral
+button(type="button", [nglButton]="selected ? 'destructive' : 'neutral'")
+  ngl-icon(iconName="download", align="left") Delete
+
+button(type="button", nglButton="neutral", (click)="change()") Change
+
+div.slds-text-title--caps.slds-m-top--x-large.slds-m-bottom--small Stateful
+button(type="button", nglButtonIcon [(nglButtonState)]="selected")
+  ngl-icon(iconName="settings")
+
+button(type="button", nglButton="neutral", [(nglButtonState)]="selected")
+  ngl-icon(iconName="add", state="not-selected") Follow
+  ngl-icon(iconName="check", state="selected") Following
+  ngl-icon(iconName="close", state="selected-focus") Unfollow
+
+
+div.slds-text-title--caps.slds-m-top--x-large.slds-m-bottom--small Icon
+button.slds-button--icon-x-small(type="button", [nglButtonIcon]="iconType")
+  ngl-icon(iconName="warning")
+
+button(type="button", nglButtonIcon *ngFor="let size of sizes;")
+  ngl-icon(iconName="warning", [size]="size")
+

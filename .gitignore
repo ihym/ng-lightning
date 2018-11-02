@@ -1,24 +1,40 @@
-### Build generated
-/demo/dist
-/demo/**/*.ngfactory.ts
-/demo/**/*.ngsummary.json
-/temp/
-/coverage/
-/docs/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-### Package manager generated
-node_modules
+# compiled output
+/dist
+/tmp
+/out-tsc
+/projects/ng-lightning/src/**/*.html
+/src/app/**/*.html
 
-### Logs
-*.log
+# dependencies
+/node_modules
 
-### OS/IDE generated files
-Thumbs.db
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
 .DS_Store
-.vscode
-.idea
-*.iml
-*.typingsrc
+Thumbs.db
 
 ### SauceLabs
 saucelabs.json

@@ -1,0 +1,6 @@
+.slds-text-title--caps.slds-m-bottom--small Inline {{date | date:'longDate'}}
+
+button.slds-m-bottom--large(type="button", nglButton="neutral", (click)="gotoDate()") 09 November 2005
+button.slds-m-bottom--large(type="button", nglButton="destructive", (click)="date = null") Clear
+
+ngl-datepicker.slds-box.slds-box--x-small([(date)]="date")

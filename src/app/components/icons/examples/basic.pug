@@ -1,0 +1,30 @@
+.slds-grid
+  .slds-col
+    .slds-text-title_caps.slds-m-bottom_x-small Utility
+    ngl-icon(iconName="connected_apps", variant="default")
+    ngl-icon(iconName="warning", variant="warning", alternativeText="Warning")
+    ngl-icon(iconName="close", variant="error")
+  .slds-col
+    .slds-text-title_caps.slds-m-bottom_x-small Standard
+    ngl-icon(iconName="standard:answer_public")
+    ngl-icon(iconName="standard:investment_account", variant="default")
+    ngl-icon(iconName="standard:avatar")
+.slds-grid.slds-m-top_large
+  .slds-col
+    .slds-text-title_caps.slds-m-bottom_x-small Doctype
+    ngl-icon(iconName="doctype:image", size="large")
+    ngl-icon(iconName="doctype:link")
+    ngl-icon(iconName="doctype:html", size="small")
+  .slds-col
+    .slds-text-title_caps.slds-m-bottom_x-small Action
+    ngl-icon.slds-icon_container_circle(iconName="action:web_link")
+    ngl-icon(iconName="action:download", size="large", svgClass="slds-p-around_x-small")
+.slds-grid.slds-m-top_large
+  .slds-col
+    .slds-text-title_caps.slds-m-bottom_x-small Custom
+    ngl-icon(iconName="custom:custom1")
+    ngl-icon(iconName="custom:custom10")
+.slds-grid.slds-m-top_large(style="height: 50px;")
+  .slds-align-middle.slds-col
+    button(type="button", nglButton="neutral", (click)="change()") Change
+    ngl-icon([iconName]="icon.iconName", [size]="icon.size", [variant]="icon.variant")
