@@ -1,17 +1,15 @@
 import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
-import {NglDynamicIconOptions, NglDynamicIconTypes} from '../util/types';
+import { BaseDynamicIconComponent } from './base-dynamic-icon';
 
 @Component({
   selector: 'ngl-dynamic-icon',
   templateUrl: './dynamic-icon.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NglDynamicIcon {
+export class NglDynamicIcon extends BaseDynamicIconComponent {
 
-  @Input() type: NglDynamicIconTypes;
+  @Input() type: 'ellie' | 'eq' | 'waffle';
 
-  @Input() options: NglDynamicIconOptions;
-
-  @Input() alternativeText: string;
+  @Input() option: string;
 
 }
