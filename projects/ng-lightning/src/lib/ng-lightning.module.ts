@@ -1,6 +1,7 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
 import {NglAlertModule} from './alert/module';
+import {NglAvatarModule} from './avatar/module';
 import {NglBadgesModule} from './badges/module';
 import {NglBreadcrumbsModule} from './breadcrumbs/module';
 import {NglButtonsModule} from './buttons/module';
@@ -29,6 +30,7 @@ import {NglConfig, NGL_CONFIG} from './config/config';
 
 const MODULES = [
   NglAlertModule,
+  NglAvatarModule,
   NglBadgesModule,
   NglBreadcrumbsModule,
   NglButtonsModule,

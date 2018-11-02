@@ -1,5 +1,6 @@
 export const routes = [
   { path: 'alert', loadChildren: './alert/alert.module#NglDemoAlertModule' },
+  { path: 'avatar', loadChildren: './avatar/avatar.module#NglDemoAvatarModule' },
   { path: 'badges', loadChildren: './badges/badges.module#NglDemoBadgesModule' },
   { path: 'breadcrumbs', loadChildren: './breadcrumbs/breadcrumbs.module#NglDemoBreadcrumbsModule' },
   { path: 'buttons', loadChildren: './buttons/buttons.module#NglDemoButtonsModule' },

@@ -13,6 +13,12 @@
   ngl-badge(theme="offline") offline
   ngl-badge(theme="alert-texture") alert-texture
 
+.slds-grid.slds-m-top_medium
+  ngl-badge
+    | Badges with
+    |
+    strong Nested Elements
+
 .slds-m-top_large.slds-grid.slds-grid_vertical-align-center
   button(type="button", nglButton="neutral", (click)="change()") Change
   ngl-badge.slds-m-horizontal_large([theme]="theme") {{theme}}

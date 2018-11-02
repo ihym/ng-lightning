@@ -3,7 +3,8 @@ import { NglAlert } from './alert';
 import { NglCommonNotifyClose } from '../common/notify/close';
 
 @Directive({
-  selector: 'ngl-alert[close]|ngl-alert[nglClose]',
+  // tslint:disable-next-line:directive-selector
+  selector: 'ngl-alert[close]',
 })
 export class NglAlertClose extends NglCommonNotifyClose {
 

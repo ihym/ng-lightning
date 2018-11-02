@@ -1,7 +1,7 @@
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {createGenericTestComponent} from '../../../test/util/helpers';
-import {NglImagesModule} from './module';
+import {NglAvatarModule} from './module';
 
 const createTestComponent = (html?: string, detectChanges?: boolean) =>
   createGenericTestComponent(TestComponent, html, detectChanges) as ComponentFixture<TestComponent>;
@@ -20,7 +20,7 @@ function getInitialsElement(element: Element): HTMLElement {
 
 describe('Avatar Component', () => {
 
-  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglImagesModule]}));
+  beforeEach(() => TestBed.configureTestingModule({declarations: [TestComponent], imports: [NglAvatarModule]}));
 
   it('should render the avatar element with default classes', () => {
     const fixture = createTestComponent(`<ngl-avatar src="image1.jpg" class="custom-class"></ngl-avatar>`);

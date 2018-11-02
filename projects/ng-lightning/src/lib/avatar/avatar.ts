@@ -10,12 +10,12 @@ export class NglAvatar implements OnInit {
   @Input() src = '';
   @Input() alternativeText = '';
 
-  @Input('size') set setSize(value: string) {
+  @Input() set size(value: string) {
     this.updateClass(this._size, value);
     this._size = value;
   }
 
-  @Input('variant') set setVariant(value: string) {
+  @Input() set variant(value: string) {
     this.updateClass(this._variant, value);
     this._variant = value;
   }
@@ -28,7 +28,7 @@ export class NglAvatar implements OnInit {
 
   private _variant: string;
   private _size: string;
-  private _error = false;
+  private _imgError = false;
 
   constructor(public element: ElementRef, public renderer: Renderer2) {
     renderer.addClass(element.nativeElement, 'slds-avatar');
@@ -50,11 +50,11 @@ export class NglAvatar implements OnInit {
   }
 
   get shouldShowImage() {
-    return this.src && !this._error;
+    return this.src && !this._imgError;
   }
 
   onImgError() {
-    this._error = true;
+    this._imgError = true;
     this.error.emit();
   }
 
