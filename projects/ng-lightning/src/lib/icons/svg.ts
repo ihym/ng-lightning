@@ -1,16 +1,16 @@
-import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, HostBinding} from '@angular/core';
 import {NglConfig, NglConfigurable} from '../config/config';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'svg[nglIconName]',
   templateUrl: './svg.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[attr.aria-hidden]': 'true',
-  },
 })
 @NglConfigurable()
 export class NglIconSvg {
+
+  @HostBinding('attr.aria-hidden') ariaHidden = 'true';
 
   @Input('nglIconName') set iconName(iconName: string) {
     const [icon, type] = iconName.split(':').reverse();

@@ -1,16 +1,16 @@
-import {Component, Input, ChangeDetectionStrategy, HostBinding, ContentChild} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, HostBinding, ContentChild, AfterContentInit} from '@angular/core';
 import {NglFormGroup} from './group';
 import {NglFormLabelTemplate} from '../form-label';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'fieldset[ngl-form-group-alt]',
   templateUrl: './group-alt.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[class.slds-form-element]': 'true',
-  },
 })
-export class NglFormGroupAlternate extends NglFormGroup {
+export class NglFormGroupAlternate extends NglFormGroup implements AfterContentInit  {
+
+  @HostBinding('class.slds-form-element') formElementClass = true;
 
   @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;

@@ -17,6 +17,7 @@ export interface INglDatatableRowClick {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'table[ngl-datatable]',
   templateUrl: './datatable.html',
   styles: [`
@@ -55,7 +56,7 @@ export class NglDatatable implements AfterContentInit, OnDestroy {
 
   @ContentChildren(NglDatatableColumn) columns: QueryList<NglDatatableColumn>;
 
-  @Output() onRowClick = new EventEmitter<INglDatatableRowClick>();
+  @Output() rowClick = new EventEmitter<INglDatatableRowClick>();
 
   private _columnsSubscription: Subscription;
 
@@ -83,8 +84,8 @@ export class NglDatatable implements AfterContentInit, OnDestroy {
     return this.sort && column.key === this.sort.key ? this.sort.order : null;
   }
 
-  rowClick(event: Event, data: any) {
-    this.onRowClick.emit({ event, data });
+  onRowClick(event: Event, data: any) {
+    this.rowClick.emit({ event, data });
   }
 
   ngAfterContentInit() {

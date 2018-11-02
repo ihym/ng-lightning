@@ -21,6 +21,7 @@ export function isInt(value: any): boolean {
     return false;
   }
   const x = parseFloat(value);
+  // tslint:disable-next-line:no-bitwise
   return (x | 0) === x;
 }
 

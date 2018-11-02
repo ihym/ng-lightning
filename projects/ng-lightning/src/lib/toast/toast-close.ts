@@ -3,7 +3,7 @@ import { NglToast } from './toast';
 import { NglCommonNotifyClose } from '../common/notify/close';
 
 @Directive({
-  selector: 'ngl-toast[close]',
+  selector: 'ngl-toast[close]|ngl-toast[nglClose]',
 })
 export class NglToastClose extends NglCommonNotifyClose {
 

@@ -1,4 +1,5 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Renderer2, HostListener, HostBinding} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, Renderer2,
+        HostListener, HostBinding, AfterViewInit} from '@angular/core';
 import {replaceClass, toBoolean, uniqueId} from '../util/util';
 
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -8,11 +9,11 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './popover.html',
 })
-export class NglPopover {
+export class NglPopover implements AfterViewInit {
 
   @Output() afterViewInit = new EventEmitter();
 
-  @Output() onInteraction = new EventEmitter<boolean>();
+  @Output() interaction = new EventEmitter<boolean>();
 
   @Input() header: string;
   @Input() footer: string;
@@ -57,7 +58,7 @@ export class NglPopover {
   @HostListener('mouseenter', ['$event', 'true'])
   @HostListener('mouseleave', ['$event', 'false'])
   interactiveHandler(evt: Event, isEnter: boolean) {
-    this.onInteraction.emit(isEnter);
+    this.interaction.emit(isEnter);
   }
 
 }

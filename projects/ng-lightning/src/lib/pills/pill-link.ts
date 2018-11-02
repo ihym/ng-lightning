@@ -2,6 +2,7 @@ import {Directive, ElementRef, Renderer2, Optional} from '@angular/core';
 import {NglPill} from './pill';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: 'a',
 })
 export class NglPillLink {

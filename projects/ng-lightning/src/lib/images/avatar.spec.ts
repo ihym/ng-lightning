@@ -98,7 +98,7 @@ describe('Avatar Component', () => {
   });
 
   it('should render the initials as fallback if image fails to load', (done) => {
-    const fixture = createTestComponent(`<ngl-avatar initials="TB" [src]="'not-exists.png'" (onError)="onError()"></ngl-avatar>`, false);
+    const fixture = createTestComponent(`<ngl-avatar initials="TB" [src]="'not-exists.png'" (error)="onError()"></ngl-avatar>`, false);
     fixture.componentInstance.onError = () => {
       fixture.detectChanges();
 

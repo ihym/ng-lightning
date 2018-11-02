@@ -70,7 +70,10 @@ describe('`NglFormCheckboxToggle`', () => {
   });
 
   it('should be able to configure enabled/disabled text correctly', () => {
-    const fixture = createTestComponent(`<ngl-form-checkbox-toggle [enabledText]="enabledText" [disabledText]="disabledText"><input nglFormControl type="checkbox" /></ngl-form-checkbox-toggle>`);
+    const fixture = createTestComponent(`
+      <ngl-form-checkbox-toggle [enabledText]="enabledText" [disabledText]="disabledText">
+        <input nglFormControl type="checkbox" />
+      </ngl-form-checkbox-toggle>`);
     fixture.componentInstance.enabledText = 'On';
     fixture.componentInstance.disabledText = 'Off';
     fixture.detectChanges();

@@ -1,6 +1,7 @@
-import {Component, Input, TemplateRef, OnChanges} from '@angular/core';
+import {Component, Input, TemplateRef, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: '[nglInternalOutlet]',
   template: `{{content}}<ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>`,
 })
@@ -10,7 +11,7 @@ export class NglInternalOutlet implements OnChanges {
   content: string;
   contentTemplate: TemplateRef<any>;
 
-  ngOnChanges(changes?: any) {
+  ngOnChanges(changes?: SimpleChanges) {
     [this.content, this.contentTemplate] = this.nglInternalOutlet instanceof TemplateRef
                                             ? ['', <TemplateRef<any>>this.nglInternalOutlet]
                                             : [<string>this.nglInternalOutlet, null];

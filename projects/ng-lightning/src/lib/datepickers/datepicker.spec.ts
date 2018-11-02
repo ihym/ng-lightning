@@ -331,7 +331,9 @@ describe('`Datepicker` Component', () => {
     const currentDate = new Date(2014, 9, 23); // 23 October 2014
     jasmine.clock().mockDate(currentDate);
 
-    const fixture = createTestComponent(`<ngl-datepicker [date]="date" (dateChange)="dateChange($event)" [showToday]="showToday"></ngl-datepicker>`);
+    const fixture = createTestComponent(`
+      <ngl-datepicker [date]="date" (dateChange)="dateChange($event)" [showToday]="showToday"></ngl-datepicker>
+    `);
     fixture.componentInstance.showToday = true;
     fixture.detectChanges();
     const rows = getTableRows(fixture.nativeElement);
@@ -351,7 +353,9 @@ describe('`Datepicker` Component', () => {
     const currentDate = new Date(2005, 10, 9); // 9 November 2005
     jasmine.clock().mockDate(currentDate);
 
-    const fixture = createTestComponent(`<ngl-datepicker [date]="date" [monthNames]="customMonths" [dayNamesShort]="customDays" showToday="false"></ngl-datepicker>`);
+    const fixture = createTestComponent(`
+      <ngl-datepicker [date]="date" [monthNames]="customMonths" [dayNamesShort]="customDays" showToday="false"></ngl-datepicker>
+    `);
     expectCalendar(fixture, [
       ['29-', '30-', '31-', '01', '02', '03', '04'],
       ['05', '06', '07', '08', '09', '10', '11'],
@@ -364,7 +368,9 @@ describe('`Datepicker` Component', () => {
   }));
 
   it('should support custom week start', async(() => {
-    const fixture = createTestComponent(`<ngl-datepicker [date]="date" [firstDayOfWeek]="firstDayOfWeek" showToday="false"></ngl-datepicker>`);
+    const fixture = createTestComponent(`
+      <ngl-datepicker [date]="date" [firstDayOfWeek]="firstDayOfWeek" showToday="false"></ngl-datepicker>
+    `);
 
     expectCalendar(fixture, [
       ['30-', '31-', '01', '02', '03', '04', '05'],
@@ -403,7 +409,9 @@ describe('`Datepicker` Component', () => {
   }));
 
   it('should handle when first day of week is after first day of month', async(() => {
-    const fixture = createTestComponent(`<ngl-datepicker [date]="date" [firstDayOfWeek]="firstDayOfWeek" showToday="false"></ngl-datepicker>`, false);
+    const fixture = createTestComponent(`
+      <ngl-datepicker [date]="date" [firstDayOfWeek]="firstDayOfWeek" showToday="false"></ngl-datepicker>
+    `, false);
 
     fixture.componentInstance.firstDayOfWeek = 3;
     expectCalendar(fixture, [

@@ -280,7 +280,9 @@ describe('Lookup Component', () => {
   });
 
   it('should handle objects using `field` property', () => {
-    const fixture = createTestComponent(`<ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pickChange)="onSelect($event)" debounce="0"></ngl-lookup>`);
+    const fixture = createTestComponent(`
+      <ngl-lookup [value]="value" [lookup]="filterObject" field="name" (pickChange)="onSelect($event)" debounce="0"></ngl-lookup>
+    `);
     const { nativeElement, componentInstance } = fixture;
     fixture.detectChanges();
 

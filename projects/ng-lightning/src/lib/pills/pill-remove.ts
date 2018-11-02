@@ -1,11 +1,11 @@
-import {Directive, Input} from '@angular/core';
+import {Directive, Input, OnInit} from '@angular/core';
 import {toBoolean} from '../util/util';
 import {NglPill} from './pill';
 
 @Directive({
   selector: '[nglPillRemove]',
 })
-export class NglPillRemove {
+export class NglPillRemove implements OnInit {
 
   @Input() set nglPillRemovable(removable: any) {
     this.pill.removable = toBoolean(removable);

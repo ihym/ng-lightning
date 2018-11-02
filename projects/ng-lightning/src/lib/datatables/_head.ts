@@ -1,6 +1,7 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBinding, TemplateRef} from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'th[ngl-internal-datatatable-head]',
   templateUrl: './_head.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,9 +32,9 @@ export class NglInternalDatatableHeadCell {
     return this.sortOrder ? `${this.sortOrder}ending` : null;
   }
 
-  @Output() onSort = new EventEmitter();
+  @Output()sort = new EventEmitter();
 
   sortChange() {
-    this.onSort.emit(this.sortOrder === 'desc' ? 'asc' : 'desc');
+    this.sort.emit(this.sortOrder === 'desc' ? 'asc' : 'desc');
   }
 }

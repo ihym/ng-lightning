@@ -1,6 +1,7 @@
 import {Component, Input, HostBinding, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'td[nglDay]',
   templateUrl: './day.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

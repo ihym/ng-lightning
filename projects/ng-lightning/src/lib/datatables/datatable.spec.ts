@@ -314,7 +314,7 @@ describe('`NglDatatable`', () => {
 
   it('should hande row click', () => {
     const fixture = createTestComponent(`
-        <table ngl-datatable [data]="data" (onRowClick)="rowClick($event)">
+        <table ngl-datatable [data]="data" (rowClick)="rowClick($event)">
           <ngl-datatable-column key="id"></ngl-datatable-column>
         </table>`);
 

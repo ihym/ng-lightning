@@ -1,7 +1,7 @@
-import {Input, Output, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef} from '@angular/core';
+import {Input, Output, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {isInt} from '../../util/util';
 
-export class NglCommonNotify {
+export class NglCommonNotify implements OnDestroy {
 
   /**
    * The type of alert.
@@ -33,6 +33,7 @@ export class NglCommonNotify {
   /**
    * Triggered by close button or duration timeout.
    */
+  // tslint:disable-next-line:no-output-rename
   @Output('close') closeEventEmitter = new EventEmitter<string>();
 
   set dismissible(dismissible: boolean) {

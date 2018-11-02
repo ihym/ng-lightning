@@ -4,6 +4,7 @@ import {NglDatatableHeadingTemplate} from './heading';
 import {toBoolean} from '../util/util';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: 'ngl-datatable-column',
 })
 export class NglDatatableColumn {

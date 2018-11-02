@@ -153,7 +153,7 @@ export class NglPopoverTrigger implements OnDestroy {
     this.popover.afterViewInit.pipe(take(1)).subscribe(() => this.position(false));
 
     if (this.nglInteractive) {
-      this.interactiveSubscription = this.popover.onInteraction.subscribe((enter: boolean) => this.nglOpen = enter);
+      this.interactiveSubscription = this.popover.interaction.subscribe((enter: boolean) => this.nglOpen = enter);
     }
 
     this.setTether(true);

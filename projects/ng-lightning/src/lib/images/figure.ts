@@ -1,6 +1,7 @@
 import {Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'figure[nglFigure]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './figure.html',

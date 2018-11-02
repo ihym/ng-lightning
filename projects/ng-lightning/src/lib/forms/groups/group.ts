@@ -1,8 +1,9 @@
-import {Component, Input, ChangeDetectionStrategy, HostBinding, ContentChild, TemplateRef, OnChanges} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy, HostBinding, ContentChild, TemplateRef, OnChanges, AfterContentInit} from '@angular/core';
 import {uniqueId} from '../../util/util';
 import {NglFormLabelTemplate, getFormLabel} from '../form-label';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'fieldset[ngl-form-group]',
   templateUrl: './group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -10,7 +11,7 @@ import {NglFormLabelTemplate, getFormLabel} from '../form-label';
     '[class.slds-form-element]': 'true',
   },
 })
-export class NglFormGroup implements OnChanges {
+export class NglFormGroup implements OnChanges, AfterContentInit {
 
   @Input('label') labelStr: string;
   @ContentChild(NglFormLabelTemplate) labelTpl: NglFormLabelTemplate;

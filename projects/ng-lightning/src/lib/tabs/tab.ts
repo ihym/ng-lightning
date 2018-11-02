@@ -6,6 +6,7 @@ import {Directive, Input, TemplateRef, Output, EventEmitter, Optional} from '@an
  * </ng-template>
  */
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[ngl-tab]',
   exportAs: 'nglTab',
 })

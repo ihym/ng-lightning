@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, Renderer2, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NglPick } from './pick';
 
@@ -9,7 +9,7 @@ import { NglPick } from './pick';
     'role': 'button',
   },
 })
-export class NglPickOption {
+export class NglPickOption implements OnInit, OnDestroy {
 
   // Use a getter to prevent direct altering
   get active() {

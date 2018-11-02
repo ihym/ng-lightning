@@ -2,7 +2,7 @@ thead
   tr.slds-text-title--caps
     th(*ngFor="let col of columns; trackBy:columnTrackBy", ngl-internal-datatatable-head,
        [heading]="col.heading", [headingTpl]="col.headingTpl?.templateRef",
-       [sortable]="col.sortable", [sortOrder]="getColumnSortOrder(col)", (onSort)="onColumnSort(col, $event)",
+       [sortable]="col.sortable", [sortOrder]="getColumnSortOrder(col)", (sort)="onColumnSort(col, $event)",
        [ngClass]="col.headClass")
 
 tbody
@@ -13,7 +13,7 @@ tbody
         ng-template([ngTemplateOutlet]="noRowsOverlay?.templateRef")
 
   ng-container(*ngIf="data && data.length > 0; else noData")
-    tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy", (click)="rowClick($event, d)")
+    tr(*ngFor="let d of data; let i = index; trackBy:dataTrackBy", (click)="onRowClick($event, d)")
       td(*ngFor="let col of columns; trackBy:columnTrackBy", [ngClass]="col.cellClass",
          ngl-internal-datatatable-cell, [row]="d", [column]="col", [index]="i")
 

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Renderer2} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit} from '@angular/core';
 import {replaceClass} from '../util/util';
 
 @Component({
@@ -6,7 +6,7 @@ import {replaceClass} from '../util/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './avatar.html',
 })
-export class NglAvatar {
+export class NglAvatar implements OnInit {
   @Input() src = '';
   @Input() alternativeText = '';
 
@@ -24,11 +24,11 @@ export class NglAvatar {
 
   @Input() fallbackIconName = 'standard:user';
 
-  @Output() onError = new EventEmitter();
+  @Output() error = new EventEmitter();
 
   private _variant: string;
   private _size: string;
-  private error = false;
+  private _error = false;
 
   constructor(public element: ElementRef, public renderer: Renderer2) {
     renderer.addClass(element.nativeElement, 'slds-avatar');
@@ -50,12 +50,12 @@ export class NglAvatar {
   }
 
   get shouldShowImage() {
-    return this.src && !this.error;
+    return this.src && !this._error;
   }
 
   onImgError() {
-    this.error = true;
-    this.onError.emit();
+    this._error = true;
+    this.error.emit();
   }
 
   private updateClass(oldValue: string, newValue: string) {

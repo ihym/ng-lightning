@@ -1,9 +1,9 @@
-import {Directive, ElementRef, Renderer2} from '@angular/core';
+import {Directive, ElementRef, Renderer2, AfterContentInit} from '@angular/core';
 
 @Directive({
   selector: '[nglPillImage]',
 })
-export class NglPillImage {
+export class NglPillImage implements AfterContentInit {
 
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 

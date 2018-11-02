@@ -2,7 +2,7 @@ import {
   Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ContentChild, ViewChild, ElementRef,
   OnDestroy, AfterContentInit
 } from '@angular/core';
-import {filter} from 'rxjs/operators';
+import {filter as rxFilter} from 'rxjs/operators';
 import {NglPicklistItemTemplate} from './item';
 import {NglPick} from '../pick/pick';
 import {toBoolean} from '../util/util';
@@ -80,7 +80,7 @@ export class NglPicklist implements AfterContentInit, OnDestroy {
   constructor(private pick: NglPick) {}
 
   ngAfterContentInit() {
-    this._changeSubscription = this.pick.nglPickChange.pipe(filter(() => !this.pick.isMultiple))
+    this._changeSubscription = this.pick.nglPickChange.pipe(rxFilter(() => !this.pick.isMultiple))
                                 .subscribe(() => this.openChange.emit(false));
   }
 

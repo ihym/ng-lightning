@@ -2,6 +2,7 @@ import {Component, ChangeDetectionStrategy, Input, HostBinding, OnChanges} from 
 import {NglDatatableColumn} from './column';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'td[ngl-internal-datatatable-cell]',
   templateUrl: './_cell.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
