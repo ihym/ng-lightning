@@ -4,7 +4,7 @@ import {NglDatatableColumn} from './column';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'td[ngl-internal-datatatable-cell]',
-  templateUrl: './_cell.html',
+  templateUrl: './cell-internal.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglInternalDatatableCell implements OnChanges {

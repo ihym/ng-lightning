@@ -3,7 +3,7 @@ import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter, HostBin
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'th[ngl-internal-datatatable-head]',
-  templateUrl: './_head.html',
+  templateUrl: './head.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'scope': 'col',

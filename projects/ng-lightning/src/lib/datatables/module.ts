@@ -9,8 +9,8 @@ import {NglDatatableHeadingTemplate} from './heading';
 import {NglDatatableLoadingOverlay, NglDatatableNoRowsOverlay} from './overlays';
 import {NglIconsModule} from '../icons/module';
 
-import {NglInternalDatatableHeadCell} from './_head';
-import {NglInternalDatatableCell} from './_cell';
+import {NglInternalDatatableHeadCell} from './head';
+import {NglInternalDatatableCell} from './cell-internal';
 
 export {INglDatatableSort, INglDatatableRowClick} from './datatable';
 
