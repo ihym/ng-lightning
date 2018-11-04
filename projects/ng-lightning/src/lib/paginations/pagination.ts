@@ -52,7 +52,7 @@ export class NglPagination implements OnChanges {
     this.pageChange.emit(+page);
   }
 
-  ngOnChanges(changes?: any) {
+  ngOnChanges() {
     this.totalPages = Math.ceil(+this.total / +this.perPage);
 
     const { start, end } = this.limits();
