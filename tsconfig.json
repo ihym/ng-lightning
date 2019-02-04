@@ -16,14 +16,6 @@
     "lib": [
       "es2017",
       "dom"
-    ],
-    "paths": {
-      "ng-lightning": [
-        "dist/ng-lightning"
-      ],
-      "ng-lightning/*": [
-        "dist/ng-lightning/*"
-      ]
-    }
+    ]
   }
 }
