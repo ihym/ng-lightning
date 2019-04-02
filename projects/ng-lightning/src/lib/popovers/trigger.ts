@@ -80,7 +80,7 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
   /**
    * Close button title (and assistive text).
    */
-  @Input('nglPopovercloseTitle') closeTitle = 'Close dialog';
+  @Input('nglPopoverCloseTitle') closeTitle = 'Close dialog';
 
   /** Emit an event when actual popover is shown or hidden */
   @Output() nglPopoverOpenChange = new EventEmitter<any>();

@@ -321,7 +321,7 @@ describe('Popovers', () => {
   });
 
   it('should render close button title and assistive text based on input', () => {
-    fixture = createTestComponent(`<button nglPopover="tip" [nglPopovercloseTitle]="closeTitle" [(nglPopoverOpen)]="open"></button>`);
+    fixture = createTestComponent(`<button nglPopover="tip" [nglPopoverCloseTitle]="closeTitle" [(nglPopoverOpen)]="open"></button>`);
     const popoverEl = getPopoverElement();
     const closeButtonEl = getCloseButtonEl(popoverEl);
     expect(closeButtonEl.title).toBe('');
