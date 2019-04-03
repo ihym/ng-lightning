@@ -3,7 +3,7 @@ import { Directive, Input, ElementRef, TemplateRef, ViewContainerRef, OnDestroy,
 import { OverlayRef, Overlay, FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { NglTooltip } from './tooltip';
 import { POSITION_MAP, DEFAULT_TOOLTIP_POSITIONS, getPlacementName, Placement } from '../util/overlay-position';
 import { uniqueId } from '../util/util';
@@ -218,7 +218,7 @@ export class NglTooltipTrigger implements OnChanges, OnDestroy {
       .withPush(false);
 
     this.positionChangesSubscription = strategy.positionChanges
-      .pipe(map(change => getPlacementName(change)))
+      .pipe(map(change => getPlacementName(change)), distinctUntilChanged())
       .subscribe((placement: Placement) => {
         this.updatePosition();
         this.updateTooltip('placement', placement);

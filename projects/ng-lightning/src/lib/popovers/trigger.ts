@@ -4,7 +4,7 @@ import { OverlayRef, Overlay, FlexibleConnectedPositionStrategy } from '@angular
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subject, merge, Subscription } from 'rxjs';
-import { map, filter, mapTo } from 'rxjs/operators';
+import { map, filter, mapTo, distinctUntilChanged } from 'rxjs/operators';
 import { NglPopover } from './popover';
 import { POSITION_MAP, DEFAULT_POPOVER_POSITIONS, getPlacementName, Placement } from '../util/overlay-position';
 import { hasObservers } from '../util/hasObservers';
@@ -234,7 +234,7 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
       .withPush(false);
 
     this.positionChangesSubscription = strategy.positionChanges
-      .pipe(map(change => getPlacementName(change)))
+      .pipe(map(change => getPlacementName(change)), distinctUntilChanged())
       .subscribe((placement: Placement) => {
         this.updatePosition();
         this.updatePopover('placement', placement);
