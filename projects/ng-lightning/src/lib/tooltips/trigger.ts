@@ -104,7 +104,9 @@ export class NglTooltipTrigger implements OnChanges, OnDestroy {
       this.updateProxies(changes);
 
       Promise.resolve().then(() => {
-        this.overlayRef.updatePosition();
+        if (this.overlayRef) {
+          this.overlayRef.updatePosition();
+        }
       });
 
       this.tooltip.markForCheck();
@@ -130,16 +132,6 @@ export class NglTooltipTrigger implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.detach();
-
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
-      this.overlayRef = null;
-    }
-
-    // Clean up the event listeners
-    this.overlayListeners.forEach((unlisten) => unlisten());
-    this.overlayListeners.clear();
-
     this.close(0);
   }
 
@@ -194,9 +186,15 @@ export class NglTooltipTrigger implements OnChanges, OnDestroy {
 
   /** Detaches the currently-attached tooltip. */
   private detach(): void {
-    if (this.overlayRef && this.overlayRef.hasAttached()) {
+    if (this.overlayRef) {
       this.overlayRef.detach();
+      this.overlayRef.dispose();
+      this.overlayRef = null;
     }
+
+    // Clean up the event listeners
+    this.overlayListeners.forEach((unlisten) => unlisten());
+    this.overlayListeners.clear();
 
     if (this.positionChangesSubscription) {
       this.positionChangesSubscription.unsubscribe();

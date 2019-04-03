@@ -137,7 +137,9 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
       this.updateProxies(changes);
 
       Promise.resolve().then(() => {
-        this.overlayRef.updatePosition();
+        if (this.overlayRef) {
+          this.overlayRef.updatePosition();
+        }
       });
 
       this.popover.markForCheck();
@@ -152,12 +154,6 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.detach();
-
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
-      this.overlayRef = null;
-    }
-
     this.close();
   }
 
@@ -203,8 +199,10 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
 
   /** Detaches the currently attached popover. */
   private detach(): void {
-    if (this.overlayRef && this.overlayRef.hasAttached()) {
+    if (this.overlayRef) {
       this.overlayRef.detach();
+      this.overlayRef.dispose();
+      this.overlayRef = null;
     }
 
     this.unsubscribeFromClickEvents();
