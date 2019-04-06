@@ -8,6 +8,9 @@ import { DemoPopoversComponent } from './popovers.component';
 
 // Examples
 import { DemoPopoversBasic } from './examples/basic';
+import { DemoPopoversPlacement } from './examples/placement';
+import { DemoPopoversSize } from './examples/size';
+import { DemoPopoversVariant } from './examples/variant';
 
 const routes: Routes = [
   { path: '', component: DemoPopoversComponent },
@@ -23,6 +26,9 @@ const routes: Routes = [
   declarations: [
     DemoPopoversComponent,
     DemoPopoversBasic,
+    DemoPopoversPlacement,
+    DemoPopoversSize,
+    DemoPopoversVariant,
   ],
 })
 export class NglDemoPopoversModule {}

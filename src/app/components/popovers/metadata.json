@@ -1,5 +1,8 @@
 {
   "examples": {
-    "basic": "Basic Usage"
+    "basic": "Basic Usage",
+    "placement": "Placement",
+    "size": "Size",
+    "variant": "Variant"
   }
 }
