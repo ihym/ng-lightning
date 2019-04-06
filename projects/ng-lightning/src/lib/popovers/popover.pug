@@ -1,6 +1,6 @@
 // Close button
 button.slds-button.slds-button_icon.slds-button_icon-small.slds-float_right.slds-popover__close(
-  *ngIf="canClose",
+  *ngIf="canClose && closeVisible",
   [title]="closeTitle",
   [class.slds-button_icon-inverse]="inverseCloseButton",
   (click)="onClose()")

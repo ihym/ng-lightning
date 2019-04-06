@@ -8,7 +8,7 @@ import { map, filter, mapTo } from 'rxjs/operators';
 import { NglPopover } from './popover';
 import { POSITION_MAP, DEFAULT_POPOVER_POSITIONS, getPlacementName, Placement } from '../util/overlay-position';
 import { hasObservers } from '../util/hasObservers';
-import { toBoolean } from '../util/convert';
+import { toBoolean, InputBoolean } from '../util/convert';
 
 export type Size = 'small' | 'medium' | 'large' | 'full-width';
 export type Variant = 'walkthrough' | 'feature' | 'warning' | 'error' | 'panel';
@@ -84,6 +84,11 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
 
   @Input('nglPopoverClass') popoverClass: any;
 
+  /**
+	 * Whether or not to override the close button's visibility, if `nglPopoverOpenChange` is set.
+	 */
+  @Input('nglPopoverCloseVisible') @InputBoolean() closeVisible = true;
+
   /** Emit an event when actual popover is shown or hidden */
   @Output() nglPopoverOpenChange = new EventEmitter<any>();
 
@@ -100,6 +105,7 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
     'closeTitle',
     'canClose',
     'popoverClass',
+    'closeVisible',
   ]);
   private _placement: Placement = 'top';
   private _open: boolean;

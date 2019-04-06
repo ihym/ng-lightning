@@ -28,6 +28,8 @@ export class NglPopover implements OnInit, OnDestroy {
 
   closeTitle: string;
 
+  closeVisible: boolean;
+
   set popoverClass(popoverClass: any) {
     this._popoverClass = popoverClass;
     this.setHostClass();

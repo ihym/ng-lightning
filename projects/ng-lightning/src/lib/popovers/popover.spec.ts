@@ -247,10 +247,29 @@ describe('Popovers', () => {
     expect(footerEl.textContent).toBe('footer');
   });
 
-  it('should not render the close button if `nglPopoverOpenChange` is not bound', () => {
+  it('should not render the close button without `nglPopoverOpenChange` bound', () => {
     fixture = createTestComponent(`<button nglPopover="tip" [nglPopoverOpen]="true"></button>`);
     const popoverEl = getPopoverElement();
-    expect(getCloseButtonEl(popoverEl)).toBeFalsy();
+    expect(getCloseButtonEl(popoverEl)).toBeNull();
+  });
+
+  it('should not render the close button without `nglPopoverOpenChange` bound even with `nglPopoverCloseVisible` set', () => {
+    fixture = createTestComponent(`<button nglPopover="tip" [nglPopoverOpen]="true" nglPopoverCloseVisible="true"></button>`);
+    const popoverEl = getPopoverElement();
+    expect(getCloseButtonEl(popoverEl)).toBeNull();
+  });
+
+  it('should toggle the close button based on `nglPopoverCloseVisible`', () => {
+    fixture = createTestComponent();
+    const popoverEl = getPopoverElement();
+
+    fixture.componentInstance.closeVisible = false;
+    fixture.detectChanges();
+    expect(getCloseButtonEl(popoverEl)).toBeNull();
+
+    fixture.componentInstance.closeVisible = true;
+    fixture.detectChanges();
+    expect(getCloseButtonEl(popoverEl)).not.toBeNull();
   });
 
   it('should close if `x` is clicked', () => {
@@ -365,6 +384,7 @@ describe('Popovers', () => {
       [nglPopoverPlacement]="placement"
       [nglPopoverVariant]="variant"
       [nglPopoverSize]="size"
+      [nglPopoverCloseVisible]="closeVisible"
       [(nglPopoverOpen)]="open"
       (nglPopoverOpenChange)="cb($event)">Open here
     </button>
@@ -379,6 +399,7 @@ export class TestComponent {
   variant: Variant;
   size: Size;
   closeTitle = '';
+  closeVisible = true;
 
   cb = jasmine.createSpy('cb');
 }
