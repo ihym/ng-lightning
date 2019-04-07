@@ -21,6 +21,20 @@ body {
   line-height: 1.71429;
 }
 
+.spinner {
+  min-height: 164px;
+  background: url('/assets/images/spinner.svg') center center no-repeat;
+
+  &-fullscreen {
+    position: fixed;
+    background-color: #fff;
+    opacity: .95;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+}
+
 .footer {
   background: $color-background;
 }
