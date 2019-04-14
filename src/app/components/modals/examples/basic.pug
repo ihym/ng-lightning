@@ -6,6 +6,12 @@ ngl-modal([header]="noHeader ? '' : 'Modal Header'", [(open)]="opened", [size]="
     | .
   |
   .slds-p-around_medium
+
+    button(type="button", nglButton, [nglPopover]="tip", nglPopoverPlacement="right", [(nglPopoverOpen)]="open1") Click me
+
+    ng-template(#tip)
+      | Sit nulla est ex deserunt exercitation anim occaecat. Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi.
+
     p
       | Sit nulla est ex deserunt exercitation anim occaecat. Tempor cupidatat consequat elit dolor adipisicing.
     |
@@ -33,3 +39,5 @@ ngl-checkbox.slds-m-top_small(label="Directional footer")
   button(type="button", nglPickOption="medium", nglButton) Medium
   |
   button(type="button", nglPickOption="large", nglButton) Large
+
+

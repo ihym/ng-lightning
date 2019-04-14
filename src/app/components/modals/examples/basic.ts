@@ -13,6 +13,7 @@ export class DemoModalsBasic {
   hasTagline = false;
   noFooter = false;
   directional = false;
+  open1 = true;
 
   open() {
     this.opened = !this.opened;

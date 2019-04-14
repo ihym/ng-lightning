@@ -1,5 +1,5 @@
 import { Component, Input, Output, ElementRef, EventEmitter, HostListener, ContentChild,
-         ChangeDetectionStrategy, Inject, OnChanges, SimpleChanges, AfterContentInit, OnDestroy } from '@angular/core';
+         ChangeDetectionStrategy, Inject, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { BlockScrollStrategy, ViewportRuler } from '@angular/cdk/overlay';
@@ -39,6 +39,8 @@ export class NglModal implements OnChanges, AfterContentInit, OnDestroy {
   @ContentChild(NglModalTaglineTemplate) taglineTpl: NglModalTaglineTemplate;
 
   @ContentChild(NglModalFooterTemplate) footer: NglModalFooterTemplate;
+
+  @ViewChild('modalContainer') modalContainer;
 
   @Input() @InputBoolean() dismissOnClickOutside = true;
 

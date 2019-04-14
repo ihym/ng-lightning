@@ -1,6 +1,6 @@
 import { Directive, Input, ElementRef, TemplateRef, ViewContainerRef, OnDestroy, OnChanges,
-  SimpleChanges, Output, EventEmitter, Renderer2, HostListener } from '@angular/core';
-import { OverlayRef, Overlay, FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
+  SimpleChanges, Output, EventEmitter, Renderer2, HostListener, Injector, Optional } from '@angular/core';
+import { OverlayRef, FlexibleConnectedPositionStrategy, Overlay } from '@angular/cdk/overlay';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subject, merge, Subscription } from 'rxjs';
@@ -9,6 +9,9 @@ import { NglPopover } from './popover';
 import { POSITION_MAP, DEFAULT_POPOVER_POSITIONS, getPlacementName, Placement } from '../util/overlay-position';
 import { hasObservers } from '../util/hasObservers';
 import { toBoolean, InputBoolean } from '../util/convert';
+import { DynamicOverlay } from '../common/dynamic-overlay/dynamic-overlay';
+import { DynamicOverlayContainer } from '../common/dynamic-overlay/dynamic-overlay-container';
+import { NglModal } from '../modals/modal';
 
 export type Size = 'small' | 'medium' | 'large' | 'full-width';
 export type Variant = 'walkthrough' | 'feature' | 'warning' | 'error' | 'panel';
@@ -16,6 +19,7 @@ export type Variant = 'walkthrough' | 'feature' | 'warning' | 'error' | 'panel';
 @Directive({
   selector: '[nglPopover]',
   exportAs: 'nglPopover',
+  providers: [DynamicOverlayContainer, DynamicOverlay],
 })
 export class NglPopoverTrigger implements OnChanges, OnDestroy {
 
@@ -118,12 +122,14 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
   private globalClickEventUnsubscriber: Function = null;
   private clickEventUnsubscriber: Function = null;
   private globalClickTimeout: number;
+  private overlay: Overlay;
 
   constructor(
     private element: ElementRef,
     private renderer: Renderer2,
     private viewContainerRef: ViewContainerRef,
-    private overlay: Overlay) {}
+    private injector: Injector,
+    @Optional() private nglModal: NglModal) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.nglOpen && !changes.nglOpen.firstChange) {
@@ -224,6 +230,14 @@ export class NglPopoverTrigger implements OnChanges, OnDestroy {
   private createOverlay(): OverlayRef {
     if (this.overlayRef) {
       return this.overlayRef;
+    }
+
+    // handle popover inside modal
+    if (this.nglModal) {
+      this.overlay = this.injector.get(DynamicOverlay);
+      (<DynamicOverlay>this.overlay).setContainerElement(this.nglModal.modalContainer.nativeElement);
+    } else {
+      this.overlay = this.injector.get(Overlay);
     }
 
     // Create connected position strategy that listens for scroll events to reposition.
