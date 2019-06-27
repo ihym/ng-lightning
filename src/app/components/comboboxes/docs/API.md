@@ -21,3 +21,5 @@
 #### NglComboboxInput
 
 Used inside `ngl-combobox`.
+
+### [nglComboboxFooter]

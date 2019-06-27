@@ -64,3 +64,5 @@ ng-template(cdkConnectedOverlay,
       li.slds-listbox__item(*ngIf="hasNoMatches()", role="presentation", aria-live="polite")
         .slds-align_absolute-center
           span(role="status") No matches found.
+
+    ng-content(select="[nglComboboxFooter]")

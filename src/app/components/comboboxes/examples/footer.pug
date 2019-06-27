@@ -1,0 +1,7 @@
+ngl-combobox(label="Make a choice",
+             [options]="options",
+             [(open)]="open",
+             [(selection)]="selection")
+  input(nglCombobox, placeholder="Select an Option")
+  .slds-m-left_medium.slds-p-vertical_x-small.slds-border_top(nglComboboxFooter)
+    | Custom Footer

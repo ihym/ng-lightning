@@ -452,6 +452,19 @@ describe('`NglCombobox`', () => {
     expect(dropdownEl).not.toHaveCssClass('slds-dropdown_length-10');
   });
 
+  it('should support custom footer', () => {
+    const fixture = createTestComponent(`
+      <ngl-combobox [options]="options" [open]="true">
+        <input nglCombobox />
+        <div nglComboboxFooter class="slds-text-body--small">Footer</div>
+      </ngl-combobox>`);
+    const menuEl = getMenu();
+    const footerEl = menuEl.lastElementChild;
+
+    expect(footerEl).toHaveCssClass('slds-text-body--small');
+    expect(footerEl.textContent).toBe('Footer');
+  });
+
   describe('Lookup', () => {
     it('should render correctly', () => {
       const fixture = createLookupTestComponent();
