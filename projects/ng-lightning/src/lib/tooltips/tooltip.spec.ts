@@ -380,16 +380,13 @@ describe('Tooltips', () => {
   });
 
   describe('custom configuration', () => {
-    const placement = 'left';
-    const openAuto = true;
-
-    beforeEach(() => TestBed.configureTestingModule({
-      providers: [
-        { provide: NGL_TOOLTIP_CONFIG, useValue: <NglTooltipConfig>{ placement, openAuto } },
-      ],
-    }));
-
     it('should have configurable "placement" and "openAuto"', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: NGL_TOOLTIP_CONFIG, useValue: <NglTooltipConfig>{ placement: 'left', openAuto: true } },
+        ],
+      });
+
       fixture = createTestComponent(`<div style="padding: 200px"><button nglTooltip="Config works"></button></div>`);
       expect(getTooltipElement()).toBeFalsy();
 
@@ -401,6 +398,36 @@ describe('Tooltips', () => {
       expect(tooltipEl.textContent.trim()).toBe('Config works');
       expect(tooltipEl).toHaveCssClass('slds-nubbin_right');
     });
+
+    it('should have configurable "delay"', fakeAsync(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: NGL_TOOLTIP_CONFIG, useValue: <NglTooltipConfig>{ delay: [500, 1000] } },
+        ],
+      });
+
+      fixture = createTestComponent(`<div style="padding: 200px"><button nglTooltip="Config works" (nglTooltipOpenChange)="cb($event)"></button></div>`);
+      const { componentInstance } = fixture;
+      const triggerEl = fixture.nativeElement.querySelector('button');
+
+      dispatchEvent(triggerEl, 'focus');
+      fixture.detectChanges();
+      expect(componentInstance.cb).not.toHaveBeenCalled();
+
+      dispatchEvent(triggerEl, 'blur');
+      fixture.detectChanges();
+      expect(componentInstance.cb).not.toHaveBeenCalled();
+
+      tick(1000);
+      fixture.detectChanges();
+      expect(componentInstance.cb).toHaveBeenCalledWith(false);
+
+      dispatchEvent(triggerEl, 'focus');
+
+      tick(500);
+      fixture.detectChanges();
+      expect(componentInstance.cb).toHaveBeenCalledWith(true);
+    }));
   });
 });
 

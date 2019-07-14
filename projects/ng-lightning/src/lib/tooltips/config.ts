@@ -20,4 +20,9 @@ export class NglTooltipConfig<D = any> {
    * Whether tooltip will open/close without two-way binding input.
    */
   openAuto = false;
+
+  /**
+   * Delay in milliseconds until it opens/closes.
+   */
+  delay: any | any[] = 0;
 }

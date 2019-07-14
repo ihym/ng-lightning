@@ -24,4 +24,4 @@
 
 Injection token that can be used to specify default rating options.
 
-Available properties: `placement`, `interactive`, `openAuto`
+Available properties: `placement`, `interactive`, `openAuto`, `delay`

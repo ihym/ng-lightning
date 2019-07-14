@@ -5,7 +5,7 @@ import { NGL_TOOLTIP_CONFIG, NglTooltipConfig } from 'ng-lightning';
   selector: 'app-demo-tooltips-config',
   templateUrl: './config.html',
   providers: [
-    { provide: NGL_TOOLTIP_CONFIG, useValue: <NglTooltipConfig>{ placement: 'top-left', openAuto: true } },
+    { provide: NGL_TOOLTIP_CONFIG, useValue: <NglTooltipConfig>{ placement: 'top-left', openAuto: true, delay: 1000 } },
   ],
 })
 export class DemoTooltipsConfig {}

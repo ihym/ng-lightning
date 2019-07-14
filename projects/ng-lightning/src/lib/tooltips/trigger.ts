@@ -115,6 +115,7 @@ export class NglTooltipTrigger implements OnChanges, OnDestroy {
     this.config = { ...new NglTooltipConfig(), ...defaultConfig };
     this.openAuto = this.config.openAuto;
     this.interactive = this.config.interactive;
+    this.delay = this.config.delay;
 
     this.renderer.setAttribute(this.element.nativeElement, 'aria-describedby', this.uid);
   }
