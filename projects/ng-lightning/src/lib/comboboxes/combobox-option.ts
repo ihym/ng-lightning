@@ -18,11 +18,24 @@ export class NglComboboxOption implements Highlightable, OnDestroy {
 
   @Input() label: string;
 
-  @Input() @InputBoolean() selected: boolean;
+  @Input() @InputBoolean() readonly disabled = false;
 
-  @Input() disabled = false;
+  @Input()
+  set selected(selected: boolean) {
+    console.log(selected);
+    if (this.selected === selected || this.destroyed) {
+      return;
+    }
 
-  uid = uniqueId('combo-option');
+
+    this._selected = selected;
+    this.cd.detectChanges();
+  }
+  get selected() {
+    return this._selected;
+  }
+
+  readonly uid = uniqueId('combo-option');
 
   // Whether or not the option is currently active and ready to be selected
   set active(active: boolean) {
@@ -45,6 +58,8 @@ export class NglComboboxOption implements Highlightable, OnDestroy {
   }
 
   private _active = false;
+
+  private _selected = false;
 
   private scrollTimer: any;
 

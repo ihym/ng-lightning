@@ -46,11 +46,15 @@ ng-template(cdkConnectedOverlay,
   //- (mousedown) handler will prevent input blur when clicking inside it
   .slds-dropdown.slds-dropdown_fluid(#dropdown, [attr.id]="uid", role="listbox", [ngClass]="dropdownClass()", (mousedown)="$event.preventDefault()")
     ul.slds-listbox.slds-listbox_vertical(role="presentation")
+      ng-template(*ngTemplateOutlet="data ? optionsTemplate : contentTemplate")
+    ng-template(#contentTemplate)
+      ng-content
+    ng-template(#optionsTemplate)
       li(*ngFor="let d of data; trackBy: trackByOption", nglComboboxOption,
-          [value]="d.value",
-          [label]="d.label",
-          [disabled]="d.disabled",
-          [selected]="isSelected(d.value)")
+        [value]="d.value",
+        [label]="d.label",
+        [disabled]="d.disabled",
+        [selected]="d.selected")
 
       //- Loading
       li.slds-listbox__item(*ngIf="loadingMore", role="presentation")

@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, TemplateRef, OnDestroy,
-         ViewChildren, QueryList, SimpleChanges, ContentChild, ViewChild, NgZone, ElementRef, ChangeDetectorRef } from '@angular/core';
+         ViewChildren, QueryList, SimpleChanges, ContentChild, ViewChild, NgZone, ElementRef, ChangeDetectorRef, ContentChildren, AfterViewInit, AfterContentInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ConnectionPositionPair, CdkOverlayOrigin, CdkConnectedOverlay } from '@angular/cdk/overlay';
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Subscription, BehaviorSubject, merge, Observable, Subject, combineLatest } from 'rxjs';
+import { take, filter, takeUntil } from 'rxjs/operators';
 import { DEFAULT_DROPDOWN_POSITIONS } from '../util/overlay-position';
 import { uniqueId, isOptionSelected, addOptionToSelection } from '../util/util';
 import { InputBoolean, InputNumber } from '../util/convert';
@@ -24,7 +24,7 @@ export interface NglComboboxOptionItem {
     'class.slds-form-element': 'true',
   }
 })
-export class NglCombobox implements OnChanges, OnDestroy {
+export class NglCombobox implements AfterContentChecked, AfterViewChecked, OnDestroy {
 
   @Input() readonly variant: 'base' | 'lookup' = 'base';
 
@@ -52,7 +52,15 @@ export class NglCombobox implements OnChanges, OnDestroy {
 
   @Input() @InputBoolean() readonly closeOnSelection = true;
 
-  @ViewChildren(NglComboboxOption) readonly options: QueryList<NglComboboxOption>;
+  /** Provided by options input */
+  @ViewChildren(NglComboboxOption) fromDataSourceOptions: QueryList<NglComboboxOption>;
+
+  /** Provided by content */
+  @ContentChildren(NglComboboxOption, { descendants: true }) fromContentOptions: QueryList<NglComboboxOption>;
+
+  get options(): QueryList<NglComboboxOption> {
+    return this.data ? this.fromDataSourceOptions : this.fromContentOptions;
+  }
 
   @Input('options') set data(data: any[]) {
     this._data = (data || []).map((d) => {
@@ -104,7 +112,11 @@ export class NglCombobox implements OnChanges, OnDestroy {
   }
 
   get selectedOptions(): NglComboboxOptionItem[] {
-    return this.data ? this.data.filter(d => this.isSelected(d.value)) : [];
+    return this.data
+      ? this.data.filter(d => this.isSelected(d.value))
+      : this.options
+        ? this.options.filter(o => o.selected)
+        : [];
   }
 
   get isLookup(): boolean {
@@ -117,8 +129,18 @@ export class NglCombobox implements OnChanges, OnDestroy {
 
   constructor(private ngZone: NgZone, private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.selection) {
+  ngAfterContentChecked() {
+    this.fromContentOptions.forEach(o => {
+      o.selected = this.isSelected(o.value);
+    });
+    this.calculateDisplayValue();
+  }
+
+  ngAfterViewChecked() {
+    if (this.data) {
+      this.data.forEach(o => {
+        o.selected = this.isSelected(o.value);
+      });
       this.calculateDisplayValue();
     }
   }
@@ -219,6 +241,9 @@ export class NglCombobox implements OnChanges, OnDestroy {
 
   private detach() {
     this.keyboardSubscribe(false);
+    if (this.activeOption) {
+      this.activeOption.active = false;
+    }
     this.keyManager = null;
     if (this.optionChangesSubscription) {
       this.optionChangesSubscription.unsubscribe();
